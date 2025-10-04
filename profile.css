@@ -1,660 +1,430 @@
-/* Reset default styles and set base font */
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Beach Themed Profile Dashboard</title>
 
+<!--
+  Beach themed single-file page.
+  Save as index.html and open in browser.
+-->
+
+<style>
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
-/* Base body styling with notebook theme */
+/* Body with beach vibes (gradient + optional photo) */
+:root{
+  --sand: #F0E6C8;
+  --sea: #20B2AA;
+  --sea-2: #1E90FF;
+  --sunset: #FF6347;
+  --gold: #FFD700;
+  --card-bg: rgba(255,255,255,0.92);
+  --muted: #586070;
+  --glass-shadow: 0 6px 25px rgba(0,0,0,0.12);
+}
 
 body {
     font-family: 'Arial', sans-serif;
-    /* Modern sans-serif font */
-    line-height: 1.6;
-    background: #F0F4F8;
-    /* Light grey-blue background for a cleaner look */
-    padding: 20px;
+    line-height: 1.5;
+    background:
+      linear-gradient(to bottom, #87CEEB 0%, #A7DBF7 30%, #F7E9C7 60%, #F0E6C8 100%); /* sky -> sand */
+    /* optional background photo layered under gradient (comment out if you prefer no photo) */
+    background-image:
+      linear-gradient(to bottom, rgba(135,206,235,0.85), rgba(240,230,200,0.88)),
+      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=1a2e5b5a3a5b0f3d2f3b8a6d1b7c9e5f");
+    background-size: cover;
+    background-position: center top;
+    padding: 30px;
     min-height: 100vh;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
 }
 
-
-/* Main container styling with notebook paper effect */
-
+/* translucent beach hut card */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
-    background: #FFFFFF;
-    /* Clean white background */
-    padding: 40px 40px 40px 60px;
-    border-radius: 12px;
-    /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    /* Soft shadow for depth */
-    /* Create notebook paper lines using CSS gradients */
-    background-image: linear-gradient(90deg, #e6c3c3 1px, transparent 1px), /* Vertical margin line */
-    repeating-linear-gradient(#fff 0px, #fff 24px, #ccd 25px);
-    /* Horizontal ruled lines */
-    background-size: 60px 100%, 100% 25px;
-    background-position: 40px 0, 0 0;
+    background: var(--card-bg);
+    padding: 36px;
+    border-radius: 18px;
+    box-shadow: var(--glass-shadow);
+    border: 2px solid rgba(255,215,0,0.25);
+    backdrop-filter: blur(6px);
 }
 
-
-/* Hole punch effect on the left side */
-
-.container::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 40px;
-    bottom: 40px;
-    width: 5px;
-    /* Slightly thicker hole punch line */
-    background: repeating-linear-gradient( 180deg, transparent, transparent 70px, #ccc 70px, #ccc 100px);
+/* Header area with logout ("lifebuoy") */
+.header-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom: 18px;
 }
+.brand {
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+.brand .logo {
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background: linear-gradient(135deg,var(--sea),var(--sea-2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:700;
+    font-size:20px;
+    box-shadow: 0 6px 12px rgba(30,144,255,0.18);
+}
+.brand h1 {
+    font-size:20px;
+    color: #3b3b3b;
+}
+.logout-btn {
+    padding:10px 18px;
+    background: linear-gradient(180deg, #FF6A3C, #FF4500);
+    color:white;
+    border:none;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow: 0 6px 14px rgba(255,99,71,0.18);
+}
+.logout-btn:active { transform: translateY(1px); }
 
-
-/* Profile card container */
-
+/* top profile block */
 .profile-card {
-    background: #FFFFFF;
-    /* Solid white background for clean look */
-    padding: 20px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,248,236,0.9));
+    padding:18px;
     margin-bottom: 20px;
-    border-radius: 12px;
-    /* Rounded corners for a modern feel */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    /* Soft shadow for depth */
+    border-radius:12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    display:flex;
+    gap:18px;
+    align-items:center;
+    border:1px solid rgba(255,215,0,0.12);
+}
+.profile-photo {
+    width:108px;
+    height:108px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid var(--gold);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+.profile-info h2 {
+    color: #FF4500;
+    font-size:24px;
+    margin-bottom:6px;
+}
+.profile-info p {
+    color:var(--muted);
+    font-size:14px;
 }
 
-
-/* Grid layout for statistics */
-
+/* layout grids */
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    /* Adjusted for better balance */
-    gap: 20px;
-    margin-top: 20px;
+    gap:20px;
+    margin-top: 10px;
+    align-items:start;
 }
 
-
-/* Left column styling */
-
+/* left column stack */
 .stats-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
-
-/* Individual stat item styling */
-
+/* stat item (left) */
 .stat-item {
-    background: #F7F7F7;
-    /* Light grey background for better contrast */
-    padding: 20px;
-    border-radius: 8px;
-    /* Softer rounded corners */
-    text-align: center;
-    border: 1px solid #ddd;
-    /* Light border for subtle definition */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    /* Soft shadow for depth */
+    background: linear-gradient(180deg, rgba(224,255,255,0.95), rgba(240,255,250,0.95));
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    border: 2px solid rgba(0,206,209,0.12);
+    box-shadow: 0 6px 10px rgba(30,144,255,0.06);
 }
-
-
-/* Audit section specific styling */
-
-.audit-section {
-    margin-top: 0;
-}
-
-.audit-section h3 {
-    color: #333;
-    /* Darker grey for better contrast */
-    margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    font-size: 1.1em;
-}
-
-
-/* Skills container specific styling */
-
-.skills-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0 100px;
-    /* Increased bottom padding for more breathing room */
-}
-
-
-/* XP and audit container layout */
-
-.xp-audit-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-
-/* Audit ratio section styling */
-
-.audit-ratio-section {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
-    /* Lighter dashed line for subtlety */
-}
-
-.audit-ratio-section h4 {
-    color: #333;
-    /* Darker grey for better visibility */
-    margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    font-size: 1.1em;
-}
-
-
-/* Stat item header styling */
-
 .stat-item h3 {
-    color: #333;
-    /* Darker grey for the header */
-    margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    padding-bottom: 10px;
-    border-bottom: 2px solid #ddd;
-    /* Solid line for separation */
+    color:#2E8B57;
+    margin-bottom:10px;
+    font-size:16px;
 }
-
-
-/* Stat value styling */
-
 .stat-value {
-    font-size: 28px;
-    /* Slightly larger font size for prominence */
-    font-weight: bold;
-    color: #34495e;
-    /* Darker grey-blue for a more modern, subtle appearance */
+    font-size:28px;
+    font-weight:800;
+    color: var(--sea-2);
 }
 
-
-/* Skills graph specific styling */
-
-#skills-graph {
-    margin-top: -20px;
-    /* More negative top margin to move graph up */
-    width: 100%;
-    max-width: 600px;
-    /* Increased max width for better visibility */
+/* right column area */
+.right-column {
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
-#skills-graph text {
-    fill: #4a4a4a;
-    /* Dark grey for better contrast */
-    font-family: 'Arial', sans-serif;
-    /* Modern sans-serif font */
-    font-size: 14px;
-    /* Slightly larger font size for readability */
-}
-
-#skills-graph .grid-line {
-    fill: none;
-    stroke: #ddd;
-    /* Lighter grid lines for a cleaner look */
-    stroke-width: 1;
-    opacity: 0.4;
-    /* Increased opacity for better visibility */
-}
-
-#skills-graph .skill-polygon {
-    fill: rgba(80, 227, 194, 0.1);
-    /* Lighter, softer polygon fill */
-    stroke: #50E3C2;
-    /* Teal stroke for a modern look */
-    stroke-width: 2;
-}
-
-#skills-graph .skill-point {
-    fill: #50E3C2;
-    /* Teal color for skill points */
-}
-
-
-/* Audit ratio specific styles */
-
-.audit-labels {
-    display: none;
-}
-
-#audit-ratio-graph {
-    margin: 15px 0;
-    /* Adjusted margin for better spacing */
-}
-
-#audit-ratio-graph .done-bar {
-    fill: #50E3C2;
-    /* Teal color for the "done" bar */
-}
-
-#audit-ratio-graph .received-bar {
-    fill: #4A90E2;
-    /* Blue color for the "received" bar */
-}
-
-#audit-ratio-graph text {
-    fill: #4a4a4a;
-    /* Dark grey for text to match the modern color scheme */
-    font-family: 'Arial', sans-serif;
-    /* Modern sans-serif font */
-    font-size: 14px;
-    /* Increased font size for readability */
-}
-
-
-/* Bar label styling */
-
-#audit-ratio-graph .bar-label {
-    fill: #333;
-    /* Darker grey for better readability */
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    font-size: 14px;
-    font-weight: bold;
-}
-
-
-/* Ratio value display */
-
-.ratio-value {
-    color: #50E3C2;
-    /* Teal color for ratio values */
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    font-size: 20px;
-    /* Increased font size for emphasis */
-    text-align: center;
-    margin-top: 15px;
-}
-
-
-/* Graphs container styling */
-
-.graphs-container {
-    display: block;
-    margin-top: 30px;
-    /* Increased margin for better spacing */
-}
-
-
-/* Individual graph styling */
-
+/* graphs area */
 .graph {
-    background: #FFFFFF;
-    /* White background for a clean look */
-    padding: 30px;
-    /* Increased padding for better layout */
-    border-radius: 12px;
-    /* More rounded corners */
-    margin-top: 30px;
-    /* Increased margin for spacing */
-    border: 1px solid #ddd;
-    /* Lighter border for a subtle design */
-    position: relative;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    /* Softer shadow for depth */
+    background: linear-gradient(180deg,#F0FFFF,#FFFFFF);
+    padding:22px;
+    border-radius:14px;
+    border:1px solid rgba(32,178,170,0.08);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
 }
-
-
-/* Graph title styling */
-
 .graph h2 {
-    color: #333;
-    /* Dark grey for contrast */
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #ddd;
-    /* Subtle solid line */
-    text-align: center;
+    color: #008B8B;
+    text-align:center;
+    margin-bottom:14px;
 }
 
-
-/* Logout button styling */
-
-.logout-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 12px 24px;
-    background: #E74C3C;
-    /* Strong red for visibility */
-    color: #FFFFFF;
-    border: none;
-    border-radius: 8px;
-    /* More rounded corners */
-    cursor: pointer;
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-}
-
-.logout-btn:hover {
-    background: #C0392B;
-    /* Darker red on hover */
-    transition: background 0.3s ease;
-    /* Smooth hover transition */
-}
-
-
-/* User info section styling */
-
-#user-info {
-    margin-bottom: 40px;
-    /* Increased margin for better spacing */
-    text-align: center;
-    padding: 20px 0;
-}
-
-#user-info h2 {
-    color: #333;
-    /* Darker grey for better readability */
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
+/* radar placeholder */
+#skills-graph {
+    width:100%;
+    max-width:520px;
+    height:280px;
     margin: 0 auto;
-    display: inline-block;
-    position: relative;
-    font-size: 26px;
-    /* Slightly larger font size */
-    font-weight: bold;
+    display:block;
+    background:
+      radial-gradient(circle at 50% 40%, rgba(80,227,194,0.06), transparent 20%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02) 1px, transparent 1px, transparent 40px);
+    border-radius:10px;
 }
 
-
-/* User info image styling */
-
-#user-info img {
-    width: 120px;
-    /* Increased size for a better profile image */
-    height: 120px;
-    object-fit: cover;
-    margin-top: 15px;
-    border: 2px solid #50E3C2;
-    /* Teal border for a modern look */
-    border-radius: 50%;
-    /* Make the image round */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Added shadow for depth */
-}
-
-
-/* Sticky note styling for recent projects */
-
+/* sticky note as seashell card */
 .sticky-note {
-    background: #FFFAE5;
-    /* Light yellow for a softer feel */
-    padding: 25px;
-    margin-top: 40px;
-    border-radius: 6px;
-    /* Softer rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    /* Softer shadow for depth */
-    position: relative;
-    transform: rotate(-1deg);
+    background: linear-gradient(180deg,#FFF8EE,#FFF5EE);
+    padding:18px;
+    margin-top:6px;
+    border-radius:12px;
+    border:1px solid rgba(255,182,193,0.12);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
 }
+.sticky-note h3 { color: #FF6347; margin-bottom:10px; }
 
-.sticky-note h3 {
-    color: #333;
-    margin-bottom: 15px;
-    font-family: 'Arial', sans-serif;
-    border-bottom: 2px solid #ddd;
-    /* Subtle line under the title */
-    padding-bottom: 10px;
-    font-size: 20px;
-    /* Slightly larger title */
-}
-
-
-/* Project list styling */
-
-.project-list {
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    color: #333;
-}
-
-.project-list div {
-    margin: 10px 0;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-    /* Subtle border for separation */
-}
-
-.project-list div:last-child {
-    border-bottom: none;
-}
-
-
-/* Audit history section styling */
-
+/* audit history list */
 .audit-history {
-    background: #FFFFFF;
-    /* White background for a clean look */
-    padding: 25px;
-    margin-top: 30px;
-    border-radius: 8px;
-    /* Slightly more rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* Soft shadow for depth */
-    border: 1px solid #ddd;
-    /* Subtle border for a polished appearance */
+    background: white;
+    padding:18px;
+    margin-top: 12px;
+    border-radius:10px;
+    border:1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.04);
 }
-
-.audit-history h3 {
-    color: #333;
-    /* Dark grey for better contrast */
-    margin-bottom: 20px;
-    /* Increased margin for better spacing */
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    padding-bottom: 12px;
-    border-bottom: 2px solid #ddd;
-    /* Subtle solid border for separation */
-    font-size: 22px;
-    /* Slightly larger font for emphasis */
-}
-
-
-/* Audit list styling */
-
-.audit-list {
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    color: #333;
-    /* Dark grey for text */
-}
+.audit-history h3 { color:#333; margin-bottom:10px; }
 
 .audit-list .audit-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 40px;
-    /* Increased padding for better spacing */
-    margin-bottom: 12px;
-    border-bottom: 1px dashed #ddd;
-    /* Lighter dashed border */
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 12px;
+    margin-bottom:10px;
+    border-radius:8px;
+    background: linear-gradient(90deg, rgba(240,248,255,0.9), rgba(255,255,255,0.9));
+    border:1px solid rgba(0,0,0,0.04);
 }
+.audit-list .audit-item:last-child { margin-bottom:0; }
 
-.audit-list .audit-item:last-child {
-    border-bottom: none;
+.audit-left {
+    display:flex;
+    gap:12px;
+    align-items:center;
 }
+.audit-title { font-weight:700; color:#2C3E50; }
+.audit-date { color:#777; font-size:13px; }
 
-.audit-list .audit-date {
-    color: #777;
-    /* Lighter grey for date text */
-    margin: 10px 0 5px;
-    font-size: 0.95em;
-    /* Slightly larger font for readability */
-}
-
-
-/* Status indicators styling */
-
+/* status badges (tropical colors) */
 .status-pass,
 .status-fail,
 .status-pending {
-    padding: 6px 16px;
-    border-radius: 12px;
-    /* More rounded corners for a modern look */
-    font-weight: bold;
-    font-family: 'Arial', sans-serif;
-    /* Modern font */
-    color: white;
-    /* White text for contrast */
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:700;
+    color:white;
+    font-size:13px;
 }
+.status-pass { background:#32CD32; }   /* green */
+.status-fail { background:#FF6347; }   /* red */
+.status-pending { background:#FFD700; color:#4b3b00; } /* gold with dark text */
 
-.status-pass {
-    background: #28a745;
-    /* Success green */
+/* responsive */
+@media screen and (max-width: 900px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .profile-card { flex-direction:row; gap:12px; }
+    .header-row { flex-direction:column; align-items:flex-start; gap:12px; }
+    #skills-graph { height:220px; max-width:100%; }
 }
-
-.status-fail {
-    background: #dc3545;
-    /* Error red */
-}
-
-.status-pending {
-    background: #ffc107;
-    /* Bright yellow for pending */
-}
-
-
-/* Add responsive design media queries */
-
-
-/* Mobile-friendly adjustments for screens under 768px */
-
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 20px 15px 20px 30px;
-        margin: 10px;
-        background-size: 30px 100%, 100% 25px;
-        background-position: 20px 0, 0 0;
-    }
-    .container::before {
-        left: 10px;
-    }
-    .stats-grid {
-        grid-template-columns: 1fr;
-        /* Single column layout for stats */
-        gap: 15px;
-    }
-    .stat-item {
-        padding: 12px;
-        /* Added padding for better mobile touch experience */
-    }
-    .skills-container {
-        padding: 10px 10px 70px;
-        /* Increased bottom padding for mobile */
-        width: 100%;
-    }
-    #skills-graph {
-        height: 200px;
-        /* Reduced height */
-        width: 80%;
-        /* Reduced width for better alignment */
-        max-width: 300px;
-        margin: -25px auto 0;
-        /* Increased negative margin */
-        display: block;
-    }
-    .stat-value {
-        font-size: 20px;
-        /* Reduced font size for better readability */
-    }
-    .sticky-note {
-        margin: 20px 0;
-        padding: 15px;
-        /* Added padding for mobile touch area */
-    }
-    .audit-history {
-        padding: 15px;
-        /* Added padding for better spacing */
-    }
-    .audit-list .audit-item {
-        padding: 8px 15px;
-        font-size: 14px;
-        /* Reduced font size for smaller screens */
-    }
-    .status-pass,
-    .status-fail,
-    .status-pending {
-        padding: 3px 10px;
-        font-size: 12px;
-        /* Adjusted font size for better mobile experience */
-    }
-    .logout-btn {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-    #user-info h2 {
-        font-size: 20px;
-        word-wrap: break-word;
-        /* Ensure long words wrap properly */
-    }
-    .ratio-value {
-        font-size: 16px;
-        /* Smaller font size for mobile */
-    }
-    /* Adjust audit list for mobile */
-    .audit-list .audit-item {
-        flex-direction: column;
-        /* Stack items vertically */
-        align-items: flex-start;
-        gap: 8px;
-    }
-    .audit-list .audit-item>div:first-child {
-        margin-bottom: 5px;
-    }
-}
-
-
-/* Adjustments for very small screens (under 480px) */
 
 @media screen and (max-width: 480px) {
-    .container {
-        padding: 15px 10px 15px 25px;
-        margin: 5px;
-    }
-    #skills-graph {
-        height: 180px;
-        /* Further reduced height */
-        width: 70%;
-        /* Further reduced width */
-        max-width: 250px;
-        margin: -30px auto 0;
-        /* Further increased negative margin */
-    }
-    .skills-container {
-        padding: 5px 5px 60px;
-        /* Further increased bottom padding */
-    }
-    .stat-value {
-        font-size: 18px;
-        /* Further reduced font size for small screens */
-    }
-    #user-info h2 {
-        font-size: 18px;
-        /* Reduced header font size for very small screens */
-    }
+    body { padding:14px; }
+    .container { padding:18px; border-radius:12px; }
+    .profile-photo { width:88px; height:88px; }
+    .stat-value { font-size:22px; }
+    .brand h1 { font-size:16px; }
+    .logout-btn { width:100%; text-align:center; }
 }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header-row">
+    <div class="brand">
+      <div class="logo">BS</div>
+      <div>
+        <h1>BeachSide Dashboard</h1>
+        <div style="color:var(--muted); font-size:13px;">Relaxed, seaside style for your profile</div>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="onLogout()">🚩 Sign out</button>
+  </div>
+
+  <!-- Profile -->
+  <div class="profile-card">
+    <img class="profile-photo" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=4f7a417c6c7c9b68a4db3b450a9b5f17" alt="User photo" />
+    <div class="profile-info">
+      <h2>Ahmed Al-Sayed</h2>
+      <p>Frontend developer • loves sunrises & clean UX</p>
+      <div style="margin-top:10px; color:var(--muted); font-size:13px;">
+        Last login: <strong>Oct 2, 2025</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats & main area -->
+  <div class="stats-grid">
+
+    <!-- Left column -->
+    <div class="stats-column">
+      <div class="stat-item">
+        <h3>Overall XP</h3>
+        <div class="stat-value">12,420</div>
+        <div style="color:var(--muted); font-size:13px; margin-top:8px;">Keep surfing — new level soon!</div>
+      </div>
+
+      <div class="stat-item">
+        <h3>Audits Completed</h3>
+        <div class="stat-value">84</div>
+        <div style="color:var(--muted); font-size:13px; margin-top:8px;">Great consistency</div>
+      </div>
+
+      <div class="sticky-note">
+        <h3>Recent Projects</h3>
+        <div class="project-list" style="color:var(--muted); font-size:14px;">
+          <div>BeachShop landing page — completed</div>
+          <div>Resort booking widget — in review</div>
+          <div>WaveMusic player — prototype</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column -->
+    <div class="right-column">
+      <div class="graph">
+        <h2>Skills Radar</h2>
+        <!-- placeholder radar box (replace with real chart library if needed) -->
+        <div id="skills-graph" role="img" aria-label="skills graph">
+          <!-- Simple illustrative SVG (lightweight) -->
+          <svg viewBox="0 0 520 280" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#50E3C2" stop-opacity="0.15"/>
+                <stop offset="1" stop-color="#1E90FF" stop-opacity="0.05"/>
+              </linearGradient>
+            </defs>
+            <rect width="520" height="280" rx="10" fill="url(#g1)"></rect>
+
+            <!-- grid -->
+            <g stroke="#dfeff2" stroke-width="1" opacity="0.7">
+              <circle cx="260" cy="140" r="80" fill="none" />
+              <circle cx="260" cy="140" r="50" fill="none" />
+              <circle cx="260" cy="140" r="20" fill="none" />
+            </g>
+
+            <!-- polygon (fake skill values) -->
+            <polygon points="260,60 340,115 320,215 200,215 180,115" fill="rgba(80,227,194,0.18)" stroke="#20B2AA" stroke-width="2"/>
+            <!-- labels -->
+            <text x="260" y="40" font-size="12" text-anchor="middle" fill="#2E8B57">HTML</text>
+            <text x="400" y="120" font-size="12" text-anchor="middle" fill="#2E8B57">CSS</text>
+            <text x="320" y="260" font-size="12" text-anchor="middle" fill="#2E8B57">JS</text>
+            <text x="200" y="260" font-size="12" text-anchor="middle" fill="#2E8B57">React</text>
+            <text x="120" y="120" font-size="12" text-anchor="middle" fill="#2E8B57">UI/UX</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="audit-history">
+        <h3>Audit History</h3>
+        <div class="audit-list">
+          <div class="audit-item">
+            <div class="audit-left">
+              <div style="width:44px; height:44px; border-radius:8px; background:linear-gradient(135deg,#1E90FF,#20B2AA); display:flex; align-items:center; justify-content:center; color:white; font-weight:700;">A1</div>
+              <div>
+                <div class="audit-title">Landing Page QA</div>
+                <div class="audit-date">Sep 30, 2025 • 10:22</div>
+              </div>
+            </div>
+            <div class="status-pass">PASS</div>
+          </div>
+
+          <div class="audit-item">
+            <div class="audit-left">
+              <div style="width:44px; height:44px; border-radius:8px; background:linear-gradient(135deg,#FFD700,#FFB347); display:flex; align-items:center; justify-content:center; color:#4b3b00; font-weight:700;">A2</div>
+              <div>
+                <div class="audit-title">Booking Widget</div>
+                <div class="audit-date">Sep 25, 2025 • 14:05</div>
+              </div>
+            </div>
+            <div class="status-pending">PENDING</div>
+          </div>
+
+          <div class="audit-item">
+            <div class="audit-left">
+              <div style="width:44px; height:44px; border-radius:8px; background:linear-gradient(135deg,#FF6A3C,#FF4500); display:flex; align-items:center; justify-content:center; color:white; font-weight:700;">A3</div>
+              <div>
+                <div class="audit-title">Payment Flow Test</div>
+                <div class="audit-date">Sep 18, 2025 • 09:12</div>
+              </div>
+            </div>
+            <div class="status-fail">FAIL</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function onLogout(){
+  // small fun animation + message (for demo)
+  const btn = document.querySelector('.logout-btn');
+  btn.disabled = true;
+  btn.textContent = 'Signing out...';
+  setTimeout(() => {
+    alert('You have been signed out — enjoy the beach 🌊🏖️');
+    btn.disabled = false;
+    btn.textContent = '🚩 Sign out';
+  }, 900);
+}
+</script>
+
+</body>
+</html>
