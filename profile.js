@@ -287,7 +287,17 @@ async function displayUserData(data) {
         <h2>Welcome, ${user.attrs.firstName || ''} ${user.attrs.lastName || ''} (${user.login})!</h2> 
 
     `;
+    const userIcon = document.createElement('img');
+    userIcon.classList.add('user-icon'); // Add any desired classes here for styling
 
+    document.getElementById('user-info').appendChild(userIcon);
+    if (user.attrs.gender === "Female") {
+        userIcon.src = 'girl.png '; // Path for female icon
+    } else {
+        userIcon.src = 'boy.png'; // Path for male icon
+    }
+
+    // document.getElementById('user-info').appendChild(userIcon);
 
 
     // Calculate and format total XP
